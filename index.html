@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Hospital</h1>
+        <nav>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#appointment">Book Appointment</a>
+        </nav>
+    </header>
+
+    <section id="about" class="about-hospital">
+        <h2>About Our Hospital</h2>
+        <p>We provide world-class healthcare services with experienced doctors across various specialties. Our mission is to ensure the well-being of every patient with personalized care.</p>
+    </section>
+
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <ul>
+            <li>General Consultation</li>
+            <li>Cardiology</li>
+            <li>Orthopedics</li>
+            <li>Pediatrics</li>
+            <li>24/7 Emergency Care</li>
+        </ul>
+    </section>
+
+    <section id="appointment">
+        <h2>Book an Appointment</h2>
+        <form id="appointment-form">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="doctor">Select Doctor:</label>
+            <select id="doctor">
+                <option>Dr. Arjun Sharma - Cardiologist</option>
+                <option>Dr. Meera Kapoor - Pediatrician</option>
+                <option>Dr. Rajat Singh - Orthopedic</option>
+            </select>
+
+            <label for="location">Select Location:</label>
+            <select id="location">
+                <option>City Hospital - Pune</option>
+                <option>HealthCare Center - Mumbai</option>
+                <option>Wellness Clinic - Delhi</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+
+            <label for="time">Time:</label>
+            <input type="time" id="time" required>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+
+        <div id="confirmation-message" class="hidden">
+            <h3>Appointment Confirmed!</h3>
+            <p id="appointment-details"></p>
+            <button id="download-receipt">Download Receipt</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('appointment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const doctor = document.getElementById('doctor').value;
+            const location = document.getElementById('location').value;
+
+            if (name === "" || date === "" || time === "" || location === "") {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const message = `Appointment confirmed for ${name} with ${doctor} at ${location} on ${date} at ${time}.`;
+            document.getElementById('appointment-details').innerText = message;
+            document.getElementById('confirmation-message').classList.remove('hidden');
+        });
+
+        document.getElementById('download-receipt').addEventListener('click', function() {
+            const details = document.getElementById('appointment-details').innerText;
+            const blob = new Blob([details], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'appointment_receipt.txt';
+            link.click();
+        });
+    </script>
+</body>
+</html>
